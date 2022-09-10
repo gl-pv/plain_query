@@ -87,7 +87,7 @@ First of all you need to set correct model name inside query object.
 It uses for correct base scope building without passing relation to query object.
 
 ```rb
-  model User
+model User
 ```
 
 ```rb
