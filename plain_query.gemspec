@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["gleeb812812@yandex.ru"]
 
   spec.summary       = %q{Builds query object by declaration sequence of query building steps}
-  spec.description   = %q{PlainQuery is a simple gem that helps you realise clear and flexible query objects}
+  spec.description   = %q{PlainQuery is a simple gem that helps you write clear and flexible query objects}
   spec.homepage      = "https://github.com/gl-pv/plain_query"
   spec.license       = "MIT"
 

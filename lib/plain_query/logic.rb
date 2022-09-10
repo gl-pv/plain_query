@@ -5,7 +5,7 @@
 #   relation.where(status: options[:status])
 # end
 class PlainQuery
-  attr_reader :relation, :options, :steps
+  attr_reader :relation, :options
 
   def initialize(relation, options)
     @relation = relation
