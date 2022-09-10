@@ -40,7 +40,7 @@ Query steps perform in writing order.
 class UsersQuery < PlainQuery
   model User
 
-  query_step :filter_by_activity, if: { options[:only_active] }
+  query_step :filter_by_activity, if: -> { options[:only_active] }
   query_step :filter_by_phone_presence
   query_step :order_by_name
 
