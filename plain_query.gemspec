@@ -13,9 +13,8 @@ Gem::Specification.new do |spec|
   spec.description   = %q{PlainQuery is a simple gem that helps you write clear and flexible query objects}
   spec.homepage      = "https://github.com/gl-pv/plain_query"
   spec.license       = "MIT"
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata["homepage_uri"] = spec.homepage
     spec.metadata["source_code_uri"] = "https://github.com/gl-pv/plain_query"
@@ -33,7 +32,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency 'activerecord', '>= 4.2'
+
   spec.add_development_dependency "bundler", "~> 1.17"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency 'database_cleaner-active_record', '~> 1.8.0'
+  spec.add_development_dependency 'sqlite3', '~> 1.4.2'
 end
