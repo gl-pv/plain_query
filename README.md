@@ -22,9 +22,6 @@ Or install it yourself as:
 
     $ gem install plain_query
 
-## Why you need to try it
-
-
 ## Usage
 ### Setting up a query object
 For setting up a query object you need to inherit your query class from PlainQuery.
@@ -60,14 +57,17 @@ users = UsersQuery.call(User.all, only_active: true)
 ```
 
 Query object implements `#call` method with two arguments:
+
 `relation` - Base scope which will be mutated inside query object. (`User.all` in example).
 If you dont pass it - will be used default scope from model declaration inside query object.
+
 `options` - Any data which will be used inside query steps or execution conditions. (`only_active: true` in example).
 
 Query object returns scope builded by query steps execution.
 
 ### query_step
 `query_step` is a main part of query building.
+
 It declares which query change method will be executed, condition of execution and order of query change methods execution.
 
 It has several arguments:
@@ -77,11 +77,13 @@ query_step STEP_NAME, CONDITION_OF_EXECUTION
 ```
 
 `STEP_NAME` is a name of method which will be executed.
+
 `CONDITION_OF_EXECUTION` is a method which allows or denieds execution of query step.
 Type of condition can be `if:` or `unless:`. Condition definition can be proc (lambda) or some query object method name.
 
 ### Using in Active Record model scope.
 First of all you need to set correct model name inside query object.
+
 It uses for correct base scope building without passing relation to query object.
 
 ```rb
