@@ -1,6 +1,7 @@
 # Realises methods for scope building by execution of sequence of steps
 # Query class defines query steps:
 # query_step :filter_by_status, if: -> { options[:status].present? }
+#
 # def filter_by_status
 #   relation.where(status: options[:status])
 # end
@@ -12,10 +13,8 @@ class PlainQuery
     @options = options
     @steps = self.class.steps
 
-    # Validates initial relation format. Allowed only ActiveRecord::Relation, model class.
-    if relation.nil?
-      raise(RelationRequired, 'Queries require a base relation defined')
-    elsif !relation.is_a?(ActiveRecord::Relation)
+    # Validates initial relation format. Allowed only ActiveRecord::Relation.
+    unless relation.is_a?(ActiveRecord::Relation)
       raise(RelationRequired, 'Queries accept only ActiveRecord::Relation as input')
     end
   end
@@ -34,7 +33,7 @@ class PlainQuery
 
       # Executes query mutation and checks that step returns ActiveRecord::Relation
       mutated_query = send(step_name)
-      if !mutated_query.is_a?(ActiveRecord::Relation)
+      unless mutated_query.is_a?(ActiveRecord::Relation)
         raise(RelationIsIncorrect, 'Scope must be ActiveRecord::Relation')
       end
 
@@ -46,7 +45,7 @@ class PlainQuery
 
   # Executes if and unless conditions, conditions must contain object method name or proc (lambda)
   def exec_condition(condition)
-    if condition.is_a?(String) || condition.is_a?(Symbol)
+    if [String, Symbol].member?(condition.class)
       !!send(condition)
     elsif condition.is_a?(Proc)
       !!instance_exec(&condition)
