@@ -1,4 +1,4 @@
-# PlainQuery
+# PlainQuery ![transp_logo_153](https://user-images.githubusercontent.com/95882437/189980991-9417395b-ff94-4480-89a5-bb97c9aaf8ca.png)
 
 PlainQuery is a simple gem that helps you write clear and flexible query objects.
 Main task for this gem is performing complex querying on active record relation, make it intuitive.
