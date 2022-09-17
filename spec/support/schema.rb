@@ -3,12 +3,19 @@
 ActiveRecord::Schema.define do
   self.verbose = false
 
-  create_table :posts, force: true do |t|
-    t.string :title
-    t.string :content
-    t.boolean :moderated, default: false
-    t.integer :count_of_views, default: 0
-    t.float :reading_duration, default: 0.0
+  create_table :books do |t|
+    t.string :name
+    t.string :genre, default: 0
+    t.integer :price, default: 0
+    t.integer :discount, default: 0
+
+    t.timestamps
+  end
+
+  create_table :book_reviews, force: true do |t|
+    t.integer :book_id
+    t.string :description
+    t.integer :rate, default: 0
 
     t.timestamps
   end

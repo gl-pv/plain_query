@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["gl-pv"]
   spec.email         = ["gleeb812812@yandex.ru"]
 
-  spec.summary       = %q{Builds query object by declaration sequence of query building steps}
-  spec.description   = %q{PlainQuery is a simple gem that helps you write clear and flexible query objects}
+  spec.summary       = %q{PlainQuery is a simple gem that helps you write clear and flexible query objects}
+  spec.description   = %q{PlainQuery helps in decomposing your fat ActiveRecord models and keeping your code slim and readable by extracting complex SQL queries or scopes into the separated classes that are easy to write, read and use.}
   spec.homepage      = "https://github.com/gl-pv/plain_query"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')

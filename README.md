@@ -32,13 +32,13 @@ Or install it yourself as:
 
 ## Usage
 ### Setting up a query object
-For setting up a query object you need to inherit your query class from PlainQuery.
+For setting up a query object you need to include PlainQuery::Base into your your query class.
 Then you need to describe query steps by using query_step method.
 Query steps perform in writing order.
 
 ```rb
-class UsersQuery < PlainQuery
-  model User
+class UsersQuery
+  include PlainQuery::Base(model: User)
 
   query_step :filter_by_activity, if: -> { options[:only_active] }
   query_step :filter_by_phone_presence
@@ -67,11 +67,11 @@ users = UsersQuery.call(User.all, only_active: true)
 Query object implements `#call` method with two arguments:
 
 `relation` - Base scope which will be mutated inside query object. (`User.all` in example).
-If you dont pass it - will be used default scope from model declaration inside query object.
+If you dont pass it - will be used default scope from model declaration from PlainQuery::Base module include `include PlainQuery::Base(model: User)`.
 
 `options` - Any data which will be used inside query steps or execution conditions. (`only_active: true` in example).
 
-Query object returns scope builded by query steps execution.
+Query object returns scope builded by ordered query steps execution.
 
 ### query_step
 `query_step` is a main part of query building.
@@ -87,7 +87,7 @@ query_step STEP_NAME, CONDITION_OF_EXECUTION
 `STEP_NAME` is a name of method which will be executed.
 
 `CONDITION_OF_EXECUTION` is a method which allows or denieds execution of query step.
-Type of condition can be `if:` or `unless:`. Condition definition can be proc (lambda) or some query object method name.
+Type of condition can be `if:` or `unless:`. Condition definition can be proc (lambda) or some query object method name. Result of query object method used in condition will be used as a boolean value.
 
 ### Using in Active Record model scope.
 First of all you need to set correct model name inside query object.
@@ -95,18 +95,12 @@ First of all you need to set correct model name inside query object.
 It uses for correct base scope building without passing relation to query object.
 
 ```rb
-model User
+include PlainQuery::Base(model: User)
 ```
 
 ```rb
-class User < ActiveRecord::Base
-  scope :active_clients, ActiveClientsQuery
-end
-```
-
-```rb
-class ActiveClientsQuery < PlainQuery
-  model User
+class ActiveClientsQuery
+  include PlainQuery::Base(model: User)
 
   query_step :filter_by_activity
   query_step :filter_by_role
@@ -118,6 +112,12 @@ class ActiveClientsQuery < PlainQuery
   def filter_by_role
     relation.where(role: :client)
   end
+end
+```
+
+```rb
+class User < ActiveRecord::Base
+  scope :active_clients, ActiveClientsQuery
 end
 ```
 
