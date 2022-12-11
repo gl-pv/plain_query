@@ -41,15 +41,11 @@ class UsersQuery
   include PlainQuery::Base(model: User)
 
   query_step :filter_by_activity, if: -> { options[:only_active] }
-  query_step :filter_by_phone_presence
+  query_step :filter_by_phone_presence, query: UsersWithPhoneQuery
   query_step :order_by_name
 
   def filter_by_activity
     relation.where(active: true)
-  end
-
-  def filter_by_phone_presence
-    relation.where.not(phone: nil)
   end
 
   def order_by_name
@@ -81,13 +77,15 @@ It declares which query change method will be executed, condition of execution a
 It has several arguments:
 
 ```rb
-query_step STEP_NAME, CONDITION_OF_EXECUTION
+query_step STEP_NAME, EXECUTION_OPTIONS
 ```
 
 `STEP_NAME` is a name of method which will be executed.
 
-`CONDITION_OF_EXECUTION` is a method which allows or denieds execution of query step.
-Type of condition can be `if:` or `unless:`. Condition definition can be proc (lambda) or some query object method name. Result of query object method used in condition will be used as a boolean value.
+`EXECUTION_OPTIONS` is a collection of options related with step execution.
+Available two types of options:
+`Condition` - allows or denieds execution of query step. Type of condition can be `if:` or `unless:`. Condition definition can be proc (lambda) or some query object method name. Result of query object method used in condition will be used as a boolean value.
+`Nested query` - realises DI for current query object by `query` key. It can execute any class which has call method and returns relation.
 
 ### Using in Active Record model scope.
 First of all you need to set correct model name inside query object.

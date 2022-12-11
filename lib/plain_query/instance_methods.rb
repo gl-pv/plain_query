@@ -28,7 +28,7 @@ module PlainQuery
         end
 
         # Executes query mutation and checks that step returns ActiveRecord::Relation
-        mutated_query = send(step_name)
+        mutated_query = params[:query] ? params[:query].call(@relation, @options) : send(step_name)
         unless mutated_query.is_a?(ActiveRecord::Relation)
           raise(StandardError, 'Scope must be ActiveRecord::Relation')
         end
